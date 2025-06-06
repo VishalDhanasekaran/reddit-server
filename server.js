@@ -8,7 +8,7 @@ app.use((cors()));
 app.get('/reddit/:subreddit', async (req, res)=>{
 
     const subreddit = req.params.subreddit;
-    console.log('idhu dhan request uh ', subreddit)
+    
     try
     {
         const response = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
@@ -17,7 +17,7 @@ app.get('/reddit/:subreddit', async (req, res)=>{
     }
     catch(error)
     {
-        res.status(500).json({error:"faile to fetch subreddit"});
+        res.status(500).json({error:"fail to fetch subreddit"});
     }
 });
 
