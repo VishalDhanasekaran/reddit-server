@@ -1,27 +1,21 @@
-const express = require('express');
-const cors = require('cors');
 const fetch = require('node-fetch');
 
-const app = express();
-app.use((cors()));
+module.exports = async (req, res) => {
+  const { query } = req;
+  const subreddit = query.subreddit;
 
-app.get('/reddit/:subreddit', async (req, res)=>{
+  if (!subreddit) 
+  {
+    return res.status(400).json({ error: 'Subreddit parameter is missing' });
+  }
 
-    const subreddit = req.params.subreddit;
-    
-    try
-    {
-        console.log("request receive: ", subreddit);
-        const response = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
-        const data = await response.json();
-        res.json(data);
-    }
-    catch(error)
-    {
-        res.status(500).json({error:"fail to fetch subreddit"});
-    }
-});
-
-app.listen(5000, ()=>{
-    console.log('Proxy server is running on port 5000...')
-})
+  try {
+    console.log("Request received for subreddit:", subreddit);
+    const response = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
+    const data = await response.json();
+    return res.status(200).json(data);
+  } catch (error) {
+    console.error("Error fetching subreddit:", error.message);
+    return res.status(500).json({ error: 'Failed to fetch subreddit' });
+  }
+};
