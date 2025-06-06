@@ -11,6 +11,7 @@ app.get('/reddit/:subreddit', async (req, res)=>{
     
     try
     {
+        console.log("request receive: ", subreddit);
         const response = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
         const data = await response.json();
         res.json(data);
