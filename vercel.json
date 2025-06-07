@@ -1,22 +1,18 @@
+
 {
   "version": 2,
   "builds": [
     {
-      "src": "server.js",
+      "src": "api/server.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "server.js"
-    }
-  ],
-  "rewrites" : [
-    {
-      "source":"/reddit/:subreddit",
-      "destination":"api/reddit?subreddit=:subreddit"
+      "src": "/reddit/(.*)",
+      "dest": "api/server.js"
     }
   ]
 }
+
 
